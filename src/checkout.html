@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Mente Completa</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Lexend", sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body {
+      background-color: #e5e5e3;
+      color: #111;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body.dark-mode {
+      background-color: #2b2b2b;
+      color: #fff;
+    }
+
+    /* HEADER */
+    header {
+      background-color: #bb4ffe;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5%;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .open-sidebar-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.2rem 0.5rem;
+    }
+
+    .logo a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .logo h1 {
+      font-size: 1.5rem;
+    }
+
+    .logo span {
+      color: #5bff95;
+    }
+
+    /* CONTAINER CHECKOUT */
+    .checkout-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 5%;
+    }
+
+    .checkout-card {
+      width: 100%;
+      max-width: 1000px;
+      background-color: #5ff96c;
+      border-radius: 12px;
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 2.5rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    body.dark-mode .checkout-card {
+      background-color: #bb4ffe;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    /* CAPA DO LIVRO */
+    .book-cover-container {
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+    }
+
+    body.dark-mode .book-cover-container {
+      background: rgba(0,0,0,0.2);
+    }
+
+    .book-cover-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      object-fit: contain;
+    }
+
+    /* DETALHES DO LIVRO */
+    .book-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .book-info h1 {
+      font-size: 2rem;
+      color: #111;
+      margin-bottom: 0.5rem;
+    }
+
+    body.dark-mode .book-info h1 {
+      color: #ffffff;
+    }
+
+    .author {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    body.dark-mode .author {
+      color: #ddd;
+    }
+
+    .description {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: #222;
+    }
+
+    body.dark-mode .description {
+      color: #eee;
+    }
+
+    .price {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 1.5rem;
+    }
+
+    body.dark-mode .price {
+      color: #fff;
+    }
+
+    /* ÁREA DE ANEXO DE PDF */
+    .pdf-upload-section {
+      background-color: rgba(255, 255, 255, 0.6);
+      padding: 1.2rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      border: 2px dashed #9557ff;
+    }
+
+    body.dark-mode .pdf-upload-section {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-color: #5bff95;
+    }
+
+    .pdf-upload-section h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .custom-file-upload {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      background-color: #bb4ffe;
+      color: white;
+      border-radius: 5px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    .custom-file-upload:hover {
+      background-color: #9b34dd;
+    }
+
+    #pdf-input {
+      display: none;
+    }
+
+    .file-info {
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* BOTÕES */
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #8fff45;
+      color: #ffffff;
+      padding: 0.7rem 1.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .btn:hover {
+      background-color: #c1ff84;
+      color: #000000;
+    }
+
+    .btn-download {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+
+    .btn-download:hover {
+      background-color: #219150;
+    }
+
+    .btn-back {
+      background-color: #666;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-back:hover {
+      background-color: #555;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100%;
+      background-color: #ffffff;
+      color: #333;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+      transition: left 0.3s ease;
+      z-index: 1001;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body.dark-mode .sidebar {
+      background-color: #1e1e1e;
+      color: #fff;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sidebar-close {
+      background: none;
+      border: none;
+      color: inherit;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .profile-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 1.5rem 0;
+    }
+
+    .profile-pic {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #bb4ffe;
+      margin-bottom: 0.5rem;
+    }
+
+    .change-photo-btn {
+      font-size: 0.75rem;
+      background: transparent;
+      border: none;
+      color: #bb4ffe;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .sidebar-nav a {
+      color: inherit;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      display: block;
+      padding: 0.5rem;
+      border-radius: 5px;
+    }
+
+    .sidebar-auth-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .btn-secondary {
+      background-color: #20f4ff;
+      color: #ffffff;
+    }
+
+    .btn.theme-active {
+      outline: 3px solid #bb4ffe;
+      box-shadow: 0 0 10px rgba(187, 79, 254, 0.5);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      display: none;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    /* FOOTER */
+    footer {
+      background-color: #6d29ff;
+      color: #ffffff;
+      padding: 3rem 5% 1.5rem;
+      text-align: center;
+    }
+
+    .footer-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .footer-contact-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 0.7rem 1.4rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .copyright {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      opacity: 0.8;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 1.5rem;
+      width: 100%;
+    }
+
+    @media(max-width: 850px) {
+      .checkout-card {
+        grid-template-columns: 1fr;
+      }
+      .book-cover-container img {
+        max-width: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+  <header>
+    <div class="header-left">
+      <button class="open-sidebar-btn" onclick="toggleSidebar()" aria-label="Abrir Menu">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+      </button>
+      <div class="logo">
+        <a href="index.html"><h1>Mente<span>Completa</span></h1></a>
+      </div>
+    </div>
+  </header>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h3>Menu & Perfil</h3>
+      <button class="sidebar-close" onclick="toggleSidebar()">&times;</button>
+    </div>
+
+    <div class="profile-container">
+      <img id="user-avatar" src="https://via.placeholder.com/150" alt="Foto de Perfil" class="profile-pic">
+      <button class="change-photo-btn" onclick="solicitarNovaFoto()">Alterar Foto</button>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="index.html">Início / Catálogo</a></li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-auth-btns">
+      <p style="font-size: 0.9rem; margin-bottom: 0.3rem; font-weight: 600;">Tema do Site:</p>
+      <button id="btn-tema-claro" class="btn" onclick="ativarModoClaro()">Claro</button>
+      <button id="btn-tema-escuro" class="btn btn-secondary" onclick="ativarModoEscuro()">Escuro</button>
+    </div>
+  </aside>
+
+  <main class="checkout-container">
+    <div class="checkout-card">
+      
+      <div class="book-cover-container">
+        <img id="checkout-book-img" src="" alt="Capa do Livro">
+      </div>
+
+      <div class="book-info">
+        <div>
+          <h1 id="checkout-book-title">Carregando livro...</h1>
+          <div class="author" id="checkout-book-author">Autor: --</div>
+          <p class="description" id="checkout-book-desc">Descrição do produto...</p>
+          <div class="price" id="checkout-book-price">R$ 0,00</div>
+        </div>
+
+        <div class="pdf-upload-section">
+          <h3><i class="fa-solid fa-file-pdf"></i> Anexar arquivo PDF Personalizado</h3>
+          <p style="font-size: 0.85rem; opacity: 0.8;">Você também pode anexar um PDF próprio para este produto:</p>
+          
+          <label for="pdf-input" class="custom-file-upload">
+            <i class="fa-solid fa-paperclip"></i> Escolher PDF
+          </label>
+          <input type="file" id="pdf-input" accept="application/pdf" onchange="processarArquivoPDF(event)">
+          
+          <div id="file-info" class="file-info">Arquivo do livro pronto para download.</div>
+        </div>
+
+        <div class="buttons">
+          <button id="btn-download-pdf" class="btn-download" onclick="baixarPDFLivro()">
+            <i class="fa-solid fa-download"></i> Baixar PDF do Livro
+          </button>
+          <a href="index.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i> Voltar ao Catálogo
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div>
+        <h4>Entre em Contato</h4>
+        <div class="footer-contact-buttons" style="margin-top: 1rem;">
+          <a href="https://wa.me/5588999999999" target="_blank" class="btn-contact"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+          <a href="https://instagram.com" target="_blank" class="btn-contact"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="mailto:contato@mentecompleta.com" class="btn-contact"><i class="fa-solid fa-envelope"></i> E-mail</a>
+        </div>
+      </div>
+      <div class="copyright">
+        &copy; 2026 Mente Completa. Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let livroAtual = {
+      titulo: "",
+      autor: "",
+      preco: "",
+      desc: "",
+      imagem: "",
+      pdfUrl: ""
+    };
+
+    let arquivoAnexadoManualUrl = null;
+    let nomeArquivoManual = "";
+
+    // FUNÇÃO PARA GERAR CAPA DINÂMICA VIA CANVAS SE NÃO HOUVER IMAGEM
+    function gerarImagemPadraoProduto(titulo) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 300;
+      canvas.height = 420;
+      const ctx = canvas.getContext('2d');
+
+      const grad = ctx.createLinearGradient(0, 0, 300, 420);
+      grad.addColorStop(0, '#bb4ffe');
+      grad.addColorStop(1, '#20f4ff');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 300, 420);
+
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 6;
+      ctx.strokeRect(15, 15, 270, 390);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 22px Lexend, sans-serif';
+      ctx.textAlign = 'center';
+      
+      const palavras = titulo.split(' ');
+      let linha = '';
+      let y = 180;
+
+      for (let i = 0; i < palavras.length; i++) {
+        let testLinha = linha + palavras[i] + ' ';
+        let metrics = ctx.measureText(testLinha);
+        if (metrics.width > 230 && i > 0) {
+          ctx.fillText(linha, 150, y);
+          linha = palavras[i] + ' ';
+          y += 30;
+        } else {
+          linha = testLinha;
+        }
+      }
+      ctx.fillText(linha, 150, y);
+
+      ctx.fillStyle = '#5bff95';
+      ctx.font = '14px Lexend, sans-serif';
+      ctx.fillText('MENTE COMPLETA', 150, 370);
+
+      return canvas.toDataURL('image/png');
+    }
+
+    // CARREGAR INFORMAÇÕES DO LIVRO SELECIONADO NO CHECKOUT
+    function carregarProdutoCheckout() {
+      const params = new URLSearchParams(window.location.search);
+      
+      livroAtual.titulo = params.get('titulo') || localStorage.getItem('checkout_titulo') || "E-book Exclusivo Mente Completa";
+      livroAtual.autor = params.get('autor') || localStorage.getItem('checkout_autor') || "Renato Souza";
+      livroAtual.preco = params.get('preco') || localStorage.getItem('checkout_preco') || "R$ 49,90";
+      livroAtual.desc = params.get('desc') || localStorage.getItem('checkout_desc') || "Aprenda estratégias mentais e técnicas práticas para atingir o próximo nível.";
+      livroAtual.imagem = params.get('imagem') || localStorage.getItem('checkout_imagem');
+      livroAtual.pdfUrl = params.get('pdf') || localStorage.getItem('checkout_pdf');
+
+      // Se não houver capa, gera dinamicamente via canvas
+      if (!livroAtual.imagem || livroAtual.imagem === 'null' || livroAtual.imagem === '') {
+        livroAtual.imagem = gerarImagemPadraoProduto(livroAtual.titulo);
+      }
+
+      document.getElementById('checkout-book-title').innerText = livroAtual.titulo;
+      document.getElementById('checkout-book-author').innerText = "Autor: " + livroAtual.autor;
+      document.getElementById('checkout-book-desc').innerText = livroAtual.desc;
+      document.getElementById('checkout-book-price').innerText = livroAtual.preco;
+      document.getElementById('checkout-book-img').src = livroAtual.imagem;
+    }
+
+    // ANEXAR ARQUIVO PDF MANUALMENTE
+    function processarArquivoPDF(event) {
+      const input = event.target;
+      const fileInfo = document.getElementById('file-info');
+
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+
+        if (file.type !== 'application/pdf') {
+          alert('Por favor, selecione um arquivo em formato PDF.');
+          input.value = '';
+          return;
+        }
+
+        nomeArquivoManual = file.name;
+        arquivoAnexadoManualUrl = URL.createObjectURL(file);
+
+        fileInfo.innerHTML = `<span style="color: #0d8a38;"><i class="fa-solid fa-circle-check"></i> Anexado manualmente: <strong>${nomeArquivoManual}</strong></span>`;
+      }
+    }
+
+    // GERAR E FAZER DOWNLOAD DO PDF DO LIVRO SELECIONADO
+    function baixarPDFLivro() {
+      // 1. Se o usuário anexou um PDF manualmente, baixa ele primeiro
+      if (arquivoAnexadoManualUrl) {
+        const a = document.createElement('a');
+        a.href = arquivoAnexadoManualUrl;
+        a.download = nomeArquivoManual || `${livroAtual.titulo}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        return;
+      }
+
+      // 2. Se houver URL do PDF do livro cadastrado
+      if (livroAtual.pdfUrl && livroAtual.pdfUrl !== 'null') {
+        const a = document.createElement('a');
+        a.href = livroAtual.pdfUrl;
+        a.download = `${livroAtual.titulo}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        return;
+      }
+
+      // 3. Fallback: Cria dinamicamente o arquivo PDF com as informações do livro
+      const conteudoPDF = `%PDF-1.4
+1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj
+2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >> endobj
+3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >> endobj
+4 0 obj << /Length 200 >> stream
+BT
+/F1 24 Tf
+50 720 Td
+(${livroAtual.titulo}) Tj
+/F1 14 Tf
+0 -40 Td
+(Autor: ${livroAtual.autor}) Tj
+0 -30 Td
+(Preco: ${livroAtual.preco}) Tj
+0 -40 Td
+(Descricao:) Tj
+0 -20 Td
+(${livroAtual.desc.substring(0, 60)}...) Tj
+ET
+endstream endobj
+5 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000242 00000 n 
+0000000492 00000 n 
+trailer << /Size 6 /Root 1 0 R >>
+startxref
+562
+%%EOF`;
+
+      const blob = new Blob([conteudoPDF], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${livroAtual.titulo.replace(/\s+/g, '_')}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // SIDEBAR & TEMAS
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('overlay').classList.toggle('active');
+    }
+
+    function atualizarBotoesTema(modo) {
+      const btnClaro = document.getElementById('btn-tema-claro');
+      const btnEscuro = document.getElementById('btn-tema-escuro');
+
+      if (modo === 'escuro') {
+        btnEscuro.classList.add('theme-active');
+        btnClaro.classList.remove('theme-active');
+      } else {
+        btnClaro.classList.add('theme-active');
+        btnEscuro.classList.remove('theme-active');
+      }
+    }
+
+    function ativarModoClaro() {
+      document.body.classList.remove("dark-mode");
+      localStorage.setItem("temaSite", "claro");
+      atualizarBotoesTema("claro");
+    }
+
+    function ativarModoEscuro() {
+      document.body.classList.add("dark-mode");
+      localStorage.setItem("temaSite", "escuro");
+      atualizarBotoesTema("escuro");
+    }
+
+    function solicitarNovaFoto() {
+      const urlFoto = prompt("Cole a URL da foto de perfil:");
+      if (urlFoto) {
+        localStorage.setItem('userFotoPerfil', urlFoto);
+        document.getElementById('user-avatar').src = urlFoto;
+      }
+    }
+
+    // INICIALIZAÇÃO DA PÁGINA
+    window.addEventListener('DOMContentLoaded', () => {
+      const temaSalvo = localStorage.getItem("temaSite");
+      if (temaSalvo === "escuro") {
+        ativarModoEscuro();
+      } else {
+        ativarModoClaro();
+      }
+
+      const fotoSalva = localStorage.getItem('userFotoPerfil');
+      if (fotoSalva) {
+        document.getElementById('user-avatar').src = fotoSalva;
+      }
+
+      carregarProdutoCheckout();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mente Completa</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="shortcut icon" href="C:/Users/renat/Videos/development/src/photoanime.jpeg" type="image/x-icon">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Lexend", sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* ==========================================
+       CORES: MODO CLARO (Padrão)
+       ========================================== */
+    body {
+      background-color: #e5e5e3;
+      color: #111;
+      line-height: 1.6;
+    }
+
+    .book-card {
+      background-color: #5ff96c;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s;
+    }
+
+    .author, .description {
+      font-size: 0.9rem;
+      color: #111;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ==========================================
+       CORES: MODO ESCURO
+       ========================================== */
+    body.dark-mode {
+      background-color: #2b2b2b;
+      color: #fff;
+    }
+
+    body.dark-mode .book-card {
+      background-color: #bb4ffe;
+    }
+
+    body.dark-mode .author, 
+    body.dark-mode .description {
+      color: #ffffff;
+    }
+
+    body.dark-mode .highlight-box {
+      background-color: #44401a;
+      color: #fff;
+    }
+
+    body.dark-mode .feature-card,
+    body.dark-mode .testimonial-card {
+      background-color: #1e1e1e;
+      color: #fff;
+    }
+
+    /* ==========================================
+       HEADER (CABEÇALHO)
+       ========================================== */
+    header {
+      background-color: #bb4ffe;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem 5%;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* BOTÃO DA SIDEBAR NO CANTO SUPERIOR ESQUERDO */
+    .open-sidebar-btn {
+      background-color: #5ff96c;
+      border: none;
+      color: #000000;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease, background-color 0.2s ease;
+      position: absolute;
+      left: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .open-sidebar-btn:hover {
+      transform: translateY(-50%) scale(1.08);
+      background-color: #4de05a;
+    }
+
+    .open-sidebar-btn i {
+      color: #000000;
+      margin-left: 2px;
+    }
+
+    .logo h1 {
+      font-size: 1.5rem;
+    }
+
+    .logo span {
+      color: #5bff95;
+    }
+
+    /* ==========================================
+       CAIXA DE DESTAQUE (TEXTO COM LÂMPADA)
+       ========================================== */
+    .highlight-container {
+      padding: 1.5rem 5% 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .highlight-box {
+      background-color: #ffffcc;
+      color: #222;
+      border-radius: 8px;
+      padding: 1.2rem 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      max-width: 900px;
+      width: 100%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .highlight-box i {
+      font-size: 2rem;
+      color: #f39c12;
+      flex-shrink: 0;
+    }
+
+    .highlight-box p {
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    /* ==========================================
+       LANDING PAGE: HERO / INTRODUÇÃO
+       ========================================== */
+    .landing-hero {
+      padding: 4rem 5% 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+    }
+
+    .hero-content {
+      flex: 1;
+      text-align: left;
+    }
+
+    .hero-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.2rem;
+      color: #bb4ffe;
+      line-height: 1.2;
+    }
+
+    body.dark-mode .hero-content h2 {
+      color: #5bff95;
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: flex-start;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-image-container {
+      flex: 1;
+      background-color: #fffcac;
+      border-radius: 12px;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .hero-image-container img {
+      width: 85%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ==========================================
+       NOVA SEÇÃO: BLOCOS DE CONTEÚDO ANIMADOS
+       ========================================== */
+    .animated-blocks-section {
+      padding: 4rem 5%;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    .block-item {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.85s ease, transform 0.85s ease;
+    }
+
+    .block-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .block-item.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .block-image {
+      flex: 1;
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .block-text-card {
+      flex: 1;
+      background-color: #7ef7ab;
+      color: #111111;
+      padding: 2.5rem 2rem 2rem 2rem;
+      border-radius: 12px;
+      position: relative;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .badge-icon-box {
+      position: absolute;
+      top: -12px;
+      left: 15px;
+      background-color: #fffcac;
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .badge-icon-box i {
+      color: #000000;
+      font-size: 1.1rem;
+    }
+
+    .block-text-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .block-text-card p {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    /* ==========================================
+       SEÇÃO DE ABAS INTERATIVAS (#90ffd3)
+       ========================================== */
+    .interactive-tabs-section {
+      padding: 3rem 5%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .tabs-wrapper {
+      background-color: #90ffd3;
+      color: #111;
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 1000px;
+      width: 100%;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    body.dark-mode .tabs-wrapper {
+      color: #111;
+    }
+
+    .tabs-nav {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #222;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn:hover {
+      color: #000;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 6px 6px 0 0;
+    }
+
+    .tab-btn.active {
+      border-bottom: 3px solid #72f3ff;
+      color: #911dcf;
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 6px 6px 0 0;
+    }
+
+    .tabs-content-container {
+      position: relative;
+      min-height: 280px;
+    }
+
+    .tab-pane {
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    .tab-pane.active {
+      display: grid;
+    }
+
+    .tab-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .tab-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .tab-text h3 {
+      font-size: 1.6rem;
+      color: #111;
+    }
+
+    /* === ANIMAÇÕES DE 0.7s === */
+    .tab-pane.exit-forward .tab-image {
+      animation: imgExitLeft 0.7s forwards;
+    }
+    .tab-pane.exit-forward .tab-text {
+      animation: textExitRight 0.7s forwards;
+    }
+    .tab-pane.enter-forward .tab-image {
+      animation: imgEnterRight 0.7s forwards;
+    }
+    .tab-pane.enter-forward .tab-text {
+      animation: textEnterLeft 0.7s forwards;
+    }
+
+    .tab-pane.exit-backward .tab-image {
+      animation: imgExitRight 0.7s forwards;
+    }
+    .tab-pane.exit-backward .tab-text {
+      animation: textExitLeft 0.7s forwards;
+    }
+    .tab-pane.enter-backward .tab-image {
+      animation: imgEnterLeft 0.7s forwards;
+    }
+    .tab-pane.enter-backward .tab-text {
+      animation: textEnterRight 0.7s forwards;
+    }
+
+    @keyframes imgExitLeft {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(-100%); opacity: 0; }
+    }
+    @keyframes textExitRight {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+    @keyframes imgEnterRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes textEnterLeft {
+      from { transform: translateX(-100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes imgExitRight {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+    @keyframes textExitLeft {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(-100%); opacity: 0; }
+    }
+    @keyframes imgEnterLeft {
+      from { transform: translateX(-100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes textEnterRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* ==========================================
+       LANDING PAGE: RECURSOS / DIFERENCIAIS
+       ========================================== */
+    .features-section {
+      padding: 3rem 5%;
+      text-align: center;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .feature-card {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+
+    .feature-card i {
+      font-size: 2.5rem;
+      color: #bb4ffe;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      margin-bottom: 0.8rem;
+    }
+
+    /* ==========================================
+       CATÁLOGO & CARDS DE LIVROS
+       ========================================== */
+    .catalog {
+      padding: 3rem 5%;
+      text-align: center;
+    }
+
+    .catalog h2 {
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .book-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .book-cover {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 1rem;
+    }
+
+    .book-cover img {
+      width: 60%;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    .book-info {
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 100%;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #111;
+    }
+
+    body.dark-mode .price {
+      color: #fff;
+    }
+
+    .btn-buy {
+      background-color: #9557ff;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-buy:hover {
+      background-color: #d8ff8b;
+      color: #000000;
+    }
+
+    /* ==========================================
+       LANDING PAGE: DEPOIMENTOS
+       ========================================== */
+    .testimonials-section {
+      padding: 3rem 5%;
+      text-align: center;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .testimonial-card {
+      background-color: #ffffff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      margin-top: 1rem;
+      font-weight: bold;
+      font-style: normal;
+      color: #bb4ffe;
+    }
+
+    /* ==========================================
+       SEÇÃO DIVULGAÇÃO YOUTUBE
+       ========================================== */
+    .youtube-section {
+      position: relative;
+      background-image: url('C:Users/renat/Videos/development/src/Trading.jpeg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      padding: 4rem 5%;
+      margin-top: 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .youtube-box {
+      background-color: #80ffdf;
+      color: #111;
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      max-width: 850px;
+      width: 100%;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .youtube-box h2 {
+      font-size: 2rem;
+      color: #111;
+    }
+
+    .youtube-box p {
+      font-size: 1.05rem;
+      color: #222;
+      max-width: 650px;
+    }
+
+    .youtube-thumbnail-container {
+      width: 100%;
+      max-width: 500px;
+      aspect-ratio: 16 / 9;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border: 3px solid #ffffff;
+    }
+
+    .youtube-thumbnail-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .btn-youtube {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background-color: #7ef7ab;
+      color: #000000;
+      padding: 0.8rem 1.8rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
+    }
+
+    .btn-youtube:hover {
+      background-color: #7018f3;
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 0, 0, 0.4);
+    }
+
+    .btn-youtube i {
+      font-size: 1.4rem;
+    }
+
+    /* ==========================================
+       CTA BANNER INTERATIVO COM IMAGEM DE FUNDO
+       ========================================== */
+    .cta-banner {
+      position: relative;
+      background-image: url('C:Users/renat/Videos/development/src/Starry Night Serenity.jpeg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      padding: 4rem 5%;
+      margin-top: 3rem;
+      text-align: center;
+      color: #ffffff;
+      overflow: hidden;
+    }
+
+    .cta-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1;
+    }
+
+    .cta-container {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cta-banner h2 {
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
+      color: #ffffff;
+    }
+
+    .cta-banner p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: #f0f0f0;
+    }
+
+    .buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      max-width: 500px;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-frase {
+      background-color: #8bffda;
+      color: #000000;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-frase:hover {
+      background-color: #d8ff8b;
+      color: #000000;
+      transform: translateY(-2px);
+    }
+
+    .balao-frase {
+      background-color: #c3fb84;
+      color: #ffffff;
+      padding: 1.2rem 1.8rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      max-width: 650px;
+      width: 100%;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+      position: relative;
+      margin-top: 0.5rem;
+    }
+
+    .balao-frase.animar-entrada {
+      animation: animarEntradaBalao 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    .balao-frase.animar-saida {
+      animation: animarSaidaBalao 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    @keyframes animarEntradaBalao {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes animarSaidaBalao {
+      from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+      }
+    }
+
+    /* ==========================================
+       BOTÕES GERAIS
+       ========================================== */
+    .btn {
+      display: inline-block;
+      background-color: #8fff45;
+      color: #ffffff;
+      padding: 0.7rem 1.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, border 0.3s;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .btn:hover {
+      background-color: #c1ff84;
+      color: #000000;
+    }
+
+    .btn-secondary {
+      background-color: #20f4ff;
+      color: #ffffff;
+    }
+
+    .btn-secondary:hover {
+      background-color: #f9ffa5;
+      color: #000000;
+    }
+
+    .btn.theme-active {
+      outline: 3px solid #bb4ffe;
+      box-shadow: 0 0 10px rgba(187, 79, 254, 0.5);
+    }
+
+    /* ==========================================
+       SIDEBAR
+       ========================================== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100%;
+      background-color: #ffffff;
+      color: #333;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+      transition: left 0.3s ease;
+      z-index: 1001;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    body.dark-mode .sidebar {
+      background-color: #1e1e1e;
+      color: #fff;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sidebar-close {
+      background: none;
+      border: none;
+      color: inherit;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .profile-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 1.5rem 0;
+    }
+
+    .profile-pic {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #bb4ffe;
+      margin-bottom: 0.5rem;
+    }
+
+    .change-photo-btn {
+      font-size: 0.75rem;
+      background: transparent;
+      border: none;
+      color: #bb4ffe;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .sidebar-nav a {
+      color: inherit;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.5rem;
+      border-radius: 5px;
+      transition: background 0.2s;
+    }
+
+    .sidebar-nav a i {
+      font-size: 1.1rem;
+      width: 24px;
+      text-align: center;
+    }
+
+    .sidebar-nav a:hover {
+      background-color: rgba(0,0,0,0.08);
+    }
+
+    body.dark-mode .sidebar-nav a:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    .sidebar-auth-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      display: none;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    /* ==========================================
+       FOOTER (RODAPÉ REFEITO)
+       ========================================== */
+    footer {
+      background-color: #6d29ff;
+      color: #ffffff;
+      padding: 3rem 5% 1.5rem;
+      text-align: center;
+    }
+
+    .footer-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .newsletter {
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .newsletter form {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .newsletter input[type="email"] {
+      padding: 0.6rem 1rem;
+      border-radius: 4px;
+      border: none;
+      width: 260px;
+      outline: none;
+    }
+
+    .footer-contact-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    .footer-contact-section h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .footer-contact-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 0.7rem 1.4rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-contact:hover {
+      background-color: #ffffff;
+      color: #6d29ff;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-contact i {
+      font-size: 1.2rem;
+    }
+
+    #feedback-msg {
+      margin-top: 1rem;
+      color: #5bff95;
+      font-weight: 500;
+    }
+
+    .copyright {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      opacity: 0.8;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 1.5rem;
+      width: 100%;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ==========================================
+       MODAIS
+       ========================================== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 1rem;
+    }
+
+    .modal-card {
+      background: #2b2b2b;
+      padding: 2rem;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
+      color: #fff;
+      position: relative;
+    }
+
+    .modal-card-cadastro {
+      max-width: 800px;
+      display: flex;
+      gap: 2rem;
+      align-items: stretch;
+      overflow: hidden;
+    }
+
+    .register-image-box {
+      flex: 1;
+      background-color: #fffcac;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      min-height: 250px;
+    }
+
+    .register-image-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .register-form-container {
+      flex: 1.2;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-card h2 {
+      margin-bottom: 1rem;
+      color: #11ced7;
+    }
+
+    .modal-card form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .form-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .form-group label {
+      font-size: 0.85rem;
+      color: #ddd;
+    }
+
+    .modal-card input {
+      padding: 0.6rem;
+      border-radius: 4px;
+      border: 1px solid #cccccc;
+      width: 100%;
+      background-color: #fff;
+      color: #000;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 900px) {
+      .landing-hero {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-content {
+        text-align: center;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .hero-image-container {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .block-item, .block-item.reverse {
+        flex-direction: column;
+      }
+
+      .modal-card-cadastro {
+        flex-direction: column;
+      }
+
+      .register-image-box {
+        min-height: 150px;
+      }
+
+      .tab-pane {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .logo h1 { font-size: 1.2rem; }
+      .sidebar { width: 260px; }
+      .highlight-box { flex-direction: column; text-align: center; }
+      .hero-content h2 { font-size: 2rem; }
+      .book-cover img { width: 75%; }
+      
+      .buttons-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .footer-contact-buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .btn-contact {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+  <header>
+    <button class="open-sidebar-btn" onclick="toggleSidebar()" aria-label="Abrir Menu">
+      <i class="fa-solid fa-play"></i>
+    </button>
+    <div class="header-left">
+      <div class="logo">
+        <h1>Mente<span>Completa</span></h1>
+      </div>
+    </div>
+  </header>
+
+  <div class="highlight-container">
+    <div class="highlight-box">
+      <i class="fa-solid fa-lightbulb"></i>
+      <p>Aqui você vai explorar histórias incríveis de acontecimentos, livros de motivação para sua vida e também frases de motivação que podem também ser uma lapada na sua cara!</p>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h3>Menu & Perfil</h3>
+      <button class="sidebar-close" onclick="toggleSidebar()">&times;</button>
+    </div>
+
+    <div class="profile-container">
+      <img id="user-avatar" src="https://via.placeholder.com/150" alt="Foto de Perfil" class="profile-pic">
+      <button class="change-photo-btn" onclick="solicitarNovaFoto()">Alterar Foto</button>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="#inicio" onclick="toggleSidebar()"><i class="fa-solid fa-house-chimney"></i> Início</a></li>
+        <li><a href="#sobre" onclick="toggleSidebar()"><i class="fa-solid fa-circle-question"></i> Sobre</a></li>
+        <li><a href="catalogoslivro.html" onclick="toggleSidebar()"><i class="fa-solid fa-laptop-file"></i> Livros</a></li>
+        <li><a href="#depoimentos" onclick="toggleSidebar()"><i class="fa-solid fa-comment"></i> Depoimentos</a></li>
+        <li><a href="#contato" onclick="toggleSidebar()"><i class="fa-solid fa-phone"></i> Contato</a></li>
+      </ul>
+    </nav>
+
+    <hr style="margin: 10px 0; border: 0; border-top: 1px solid #ccc;">
+
+    <div class="sidebar-content">
+      <div id="sidebar-logged-out">
+        <p style="margin-bottom: 10px; font-size: 0.9rem;">Acesse sua conta ou cadastre-se:</p>
+        <div class="sidebar-auth-btns">
+          <button class="btn" onclick="toggleSidebar(); abrirModalCadastro();">Criar Conta</button>
+          <button class="btn btn-secondary" onclick="toggleSidebar(); abrirModalLogin();">Entrar</button>
+        </div>
+      </div>
+
+      <div id="sidebar-logged-in" class="hidden">
+        <p><strong>Nome:</strong> <span id="user-name-display"></span></p>
+        <p><strong>E-mail:</strong> <span id="user-email-display"></span></p>
+        <button class="btn" style="background-color: #505050; color: #ffffff; margin-top: 10px; width: 100%;" onclick="fazerLogout()">Sair</button>
+      </div>
+    </div>
+
+    <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ccc;">
+
+    <h4>Tema do Site</h4>
+    <div style="display:flex; gap:10px; margin-top:10px;">
+      <button id="btn-tema-claro" class="btn" style="flex: 1;" onclick="ativarModoClaro()">
+        <i class="fa-solid fa-sun"></i> Claro
+      </button>
+      <button id="btn-tema-escuro" class="btn" style="flex: 1;" onclick="ativarModoEscuro()">
+        <i class="fa-solid fa-moon"></i> Escuro
+      </button>
+    </div>
+  </aside>
+
+  <section id="inicio" class="landing-hero">
+    <div class="hero-content">
+      <h2>Não só o conhecimento muda a sua mentalidade, mas também uma linda história contada.</h2>
+      <p>Se você procura conhecimento e histórias para ler, aqui é o lugar certo para você! Aproveite tudo que temos por aqui pra se aprofundar no que você quer aprender, e também para trazer um belo conforto para você com algumas histórias chocantes, para você ter a liberdade de pensar.</p>
+      <div class="hero-actions">
+        <a href="#livros" class="btn">Explorar Conteúdos</a>
+        <button class="btn btn-secondary" onclick="abrirModalCadastro()">Criar Conta Grátis</button>
+      </div>
+    </div>
+    <div class="hero-image-container">
+      <img src="C:/Users/renat/Videos/development/src/trabalho.png" alt="Imagem Marketing Vozes que Curam">
+    </div>
+  </section>
+
+  <section class="animated-blocks-section">
+    <div class="block-item">
+      <img src="C:/Users/renat/Videos/development/src/technology revolution.jpeg" alt="Imagem 1" class="block-image">
+      <div class="block-text-card">
+        <div class="badge-icon-box">
+          <i class="fa-solid fa-chart-line"></i>
+        </div>
+        <h3>Aprenda também sobre o mundo tecnológico</h3>
+        <p>Será disponibilizado também livros com histórias que envolvem também a tecnologia e a revolução dela nos dias atuais, com acontecimentos e fatos.</p>
+      </div>
+    </div>
+
+    <div class="block-item reverse">
+      <img src="C:Users/renat/Videos/development/src/fitness.jpeg" alt="Imagem 2" class="block-image">
+      <div class="block-text-card">
+        <div class="badge-icon-box">
+          <i class="fa-solid fa-chart-line"></i>
+        </div>
+        <h3>Histórias de superação</h3>
+        <p>Você vai encontrar também histórias de pessoas que passaram por momentos difíceis, que podem te inspirar e te dar um gancho a mais pra te ajudar a superar também!</p>
+      </div>
+    </div>
+
+    <div class="block-item">
+      <img src="C:Users/renat/Videos/development/src/Trading.jpeg" alt="Imagem 3" class="block-image">
+      <div class="block-text-card">
+        <div class="badge-icon-box">
+          <i class="fa-solid fa-chart-line"></i>
+        </div>
+        <h3>Aprendizados no geral</h3>
+        <p>Este site em si nós disponibilizaremos histórias, livros de teorias, pra você fortalecer seu conhecimento!</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="interactive-tabs-section">
+    <div class="tabs-wrapper">
+      <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab(0)">Sobre</button>
+        <button class="tab-btn" onclick="switchTab(1)">Conhecimento</button>
+        <button class="tab-btn" onclick="switchTab(2)">Resultados</button>
+        <button class="tab-btn" onclick="switchTab(3)">Objetivos</button>
+        <button class="tab-btn" onclick="switchTab(4)">Contatos</button>
+      </div>
+
+      <div class="tabs-content-container">
+        <div class="tab-pane active" id="tab-0">
+          <img src="C:Users/renat/Videos/development/src/studyngdev.jpeg" alt="Imagem Sobre" class="tab-image">
+          <div class="tab-text">
+            <h3>Sobre a Mente Completa</h3>
+            <p>Nossa plataforma nasceu da ideia de que histórias marcantes aliadas ao desenvolvimento pessoal têm o poder transformador de mudar hábitos, perspectivas e a forma como encaramos a vida diária.</p>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="tab-1">
+          <img src="C:Users/renat/Videos/development/src/conhecimento.jpeg" alt="Imagem Conhecimento" class="tab-image">
+          <div class="tab-text">
+            <h3>Busca Contínua por Conhecimento</h3>
+            <p>O conhecimento libertador surge quando desafiamos nossas próprias ideias pré-concebidas. Oferecemos conteúdos ricos, desde e-books teóricos até reflexões práticas do cotidiano.</p>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="tab-2">
+          <img src="C:Users/renat/Videos/development/src/Trading.jpeg" alt="Imagem Resultados" class="tab-image">
+          <div class="tab-text">
+            <h3>Resultados Visíveis</h3>
+            <p>Milhares de leitores já alcançaram maior disciplina, clareza mental e foco profissional aplicando nossos conceitos diários e desfrutando de nossas leituras exclusivas.</p>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="tab-3">
+          <img src="C:Users/renat/Videos/development/src/undraw_design-objectives_f9uv.svg" alt="Imagem Objetivos" class="tab-image">
+          <div class="tab-text">
+            <h3>Nossos Objetivos</h3>
+            <p>Queremos ser a ponte entre o entretenimento da boa leitura e o verdadeiro fortalecimento da sua mente, alcançando pessoas em busca de constante evolução interior.</p>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="tab-4">
+          <img src="C:Users/renat/Videos/development/src/undraw_chatting_29rn.svg" alt="Imagem Contatos" class="tab-image">
+          <div class="tab-text">
+            <h3>Entre em Contato</h3>
+            <p>Tem dúvidas, sugestões ou feedbacks? Nossa equipe de suporte está sempre disponível para atendê-lo e ajudar no seu percurso de aprendizado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre" class="features-section">
+    <h2>O Que Você Encontra Aqui</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <i class="fa-solid fa-book-open"></i>
+        <h3>E-books Exclusivos</h3>
+        <p>Obras pensadas para expansão pessoal e entendimento prático.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-fire"></i>
+        <h3>Frases de Impacto</h3>
+        <p>Aqueça sua motivação diária com reflexões diretas e sem rodeios.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-brain"></i>
+        <h3>Desenvolvimento</h3>
+        <p>Conteúdos práticos para transformar hábitos e fortalecer a mente.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="livros" class="catalog">
+    <h2>Nossos Livros e E-books</h2>
+    <div class="book-grid">
+      
+      <article class="book-card">
+        <div class="book-cover">
+          <img src="C:/Users/renat/Videos/development/src/vozes que curam.png" alt="Capa do Livro Vozes que Curam">
+        </div>
+        <div class="book-info">
+          <h3>Vozes que Curam</h3>
+          <p class="author">Por Renato Silva</p>
+          <p class="description">Aqui você vai entender que a música não é somente sobre se apresentar em palcos, e sim também sobre seu bem-estar.</p>
+          <div class="card-footer">
+            <span class="price">R$ 40,22</span>
+            <button class="btn-buy" onclick="baixarLivro('Vozes que Curam', 'Renato Silva', 'R$ 40,22', 'Descrição...', 'pdf/Vozes_que_Curam.pdf', {site:'https://pay.kiwify.com.br/3q6gKg3'})">
+              Baixar PDF
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="book-card">
+        <div class="book-cover">
+          <img src="C:/Users/renat/Videos/development/src/história de jesus cristo.png" alt="Capa do E-book História de Jesus Cristo">
+        </div>
+        <div class="book-info">
+          <h3>História de Jesus Cristo</h3>
+          <p class="author">Por Renato Silva</p>
+          <p class="description">Aqui você irá entender a história de Jesus do começo ao fim com imagens!</p>
+          <div class="card-footer">
+            <span class="price">R$ 61,14</span>
+            <button class="btn-buy" onclick="baixarLivro('História de Jesus Cristo', 'Renato Silva', 'Gratuito', 'Descrição...', 'pdf/Historia_de_Jesus_Cristo.pdf', {site:'https://pay.kiwify.com.br/L43mZj5'})">
+              Baixar PDF
+            </button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="depoimentos" class="testimonials-section">
+    <h2>Depoimentos de Leitores</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p>"Leitura rápida, objetiva e que realmente muda nossa percepção diária. Vale muito a pena!"</p>
+        <div class="testimonial-author">- Lucas M.</div>
+      </div>
+      <div class="testimonial-card">
+        <p>"A abordagem das histórias e as frases diretas trazem uma clareza incrível para o dia a dia."</p>
+        <div class="testimonial-author">- Juliana R.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="youtube-section">
+    <div class="youtube-box">
+      <h2>Conheça nosso canal para mais informações</h2>
+      <p>Acompanhe nosso canal sobre covers de músicas e músicas autorais, e também poderá entrar em contato conosco pelo youtube por um comentário se tiver interesse, e me chamar na DM!</p>
+      
+      <div class="youtube-thumbnail-container">
+        <img src="C:/Users/renat/Videos/imagens para videos/pulso da vitoria.jpg" alt="Thumbnail do Vídeo do YouTube">
+      </div>
+
+      <a href="https://www.youtube.com/channel/UCE-xh8742lt-QqUD7iJa1bw" target="_blank" rel="noopener noreferrer" class="btn-youtube">
+        <i class="fa-brands fa-youtube"></i> Acessar Canal
+      </a>
+    </div>
+  </section>
+
+  <section class="cta-banner">
+    <div class="cta-overlay"></div>
+    <div class="cta-container">
+      <h2>Pronto para Expandir sua Mente?</h2>
+      <p>Clique em um tópico abaixo para receber uma reflexão direcionada ao seu momento:</p>
+      
+      <div class="buttons-grid">
+        <button class="btn-frase" onclick="mostrarFrase('ansiedade')">Ansiedade</button>
+        <button class="btn-frase" onclick="mostrarFrase('depressao')">Depressão</button>
+        <button class="btn-frase" onclick="mostrarFrase('motivacao')">Falta de Motivação</button>
+        <button class="btn-frase" onclick="mostrarFrase('medo')">Medo</button>
+      </div>
+
+      <div id="balao-frase" class="balao-frase hidden">
+        <p id="texto-frase"></p>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contato">
+    <div class="footer-container">
+      <div class="newsletter">
+        <h3>Receba Novidades e E-books Gratuitos</h3>
+        <form id="newsletter-form">
+          <input type="email" id="email" placeholder="Digite seu e-mail" required>
+          <button type="submit" class="btn">Inscrever-se</button>
+        </form>
+        <p id="feedback-msg" class="hidden"></p>
+      </div>
+
+      <div class="footer-contact-section">
+        <h4>Fale Conosco</h4>
+        <div class="footer-contact-buttons">
+          <a href="mailto:contato@mentecompleta.com" class="btn-contact">
+            <i class="fa-regular fa-envelope"></i> E-mail
+          </a>
+          <a href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer" class="btn-contact">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+          </a>
+          <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" class="btn-contact">
+            <i class="fa-brands fa-instagram"></i> Instagram
+          </a>
+        </div>
+      </div>
+
+      <div class="copyright">
+        <p>&copy; 2026 Mente Completa. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="modal-cadastro" class="modal-overlay hidden">
+    <div class="modal-card modal-card-cadastro">
+      <button class="modal-close" onclick="fecharModalCadastro()">&times;</button>
+      
+      <div class="register-image-box">
+        <img src="C:/Users/renat/Videos/development/src/undraw_sharing-ideas_toje.svg" alt="Imagem Ilustrativa">
+      </div>
+
+      <div class="register-form-container">
+        <h2>Criar Conta</h2>
+        <form id="form-cadastro">
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="reg-nome">Nome:</label>
+              <input type="text" id="reg-nome" required placeholder="Seu nome">
+            </div>
+            <div class="form-group">
+              <label for="reg-sobrenome">Sobrenome:</label>
+              <input type="text" id="reg-sobrenome" required placeholder="Seu sobrenome">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="reg-email">E-mail:</label>
+              <input type="email" id="reg-email" required placeholder="seu@email.com">
+            </div>
+            <div class="form-group">
+              <label for="reg-senha">Senha:</label>
+              <input type="password" id="reg-senha" required placeholder="******">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="reg-confirmar-senha">Confirmar Senha:</label>
+              <input type="password" id="reg-confirmar-senha" required placeholder="******">
+            </div>
+            <div class="form-group">
+              <label for="reg-nascimento">Data de Nascimento:</label>
+              <input type="date" id="reg-nascimento" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn" style="margin-top: 0.5rem;">Cadastrar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-login" class="modal-overlay hidden">
+    <div class="modal-card">
+      <button class="modal-close" onclick="fecharModalLogin()">&times;</button>
+      <h2>Entrar na Conta</h2>
+      <form id="form-login">
+        <label for="login-email">E-mail:</label>
+        <input type="email" id="login-email" required placeholder="seu@email.com">
+
+        <label for="login-senha">Senha:</label>
+        <input type="password" id="login-senha" required placeholder="******">
+
+        <button type="submit" class="btn btn-secondary">Entrar</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let currentTabIndex = 0;
+    let isAnimating = false;
+
+    function switchTab(newIndex) {
+      if (newIndex === currentTabIndex || isAnimating) return;
+
+      isAnimating = true;
+
+      const buttons = document.querySelectorAll('.tab-btn');
+      const currentPane = document.getElementById(`tab-${currentTabIndex}`);
+      const newPane = document.getElementById(`tab-${newIndex}`);
+
+      buttons[currentTabIndex].classList.remove('active');
+      buttons[newIndex].classList.add('active');
+
+      const isForward = newIndex > currentTabIndex;
+
+      const exitClass = isForward ? 'exit-forward' : 'exit-backward';
+      const enterClass = isForward ? 'enter-forward' : 'enter-backward';
+
+      currentPane.classList.add(exitClass);
+
+      setTimeout(() => {
+        currentPane.classList.remove('active', exitClass);
+
+        newPane.classList.add('active', enterClass);
+
+        setTimeout(() => {
+          newPane.classList.remove(enterClass);
+          currentTabIndex = newIndex;
+          isAnimating = false;
+        }, 700);
+
+      }, 700);
+    }
+
+    // Frases do Banner
+    const frasesBanner = {
+      ansiedade: "Deixa essa ansiedade pra lá e vai viver! É horrível ficar com a mente muito em um futuro que não existe, até mesmo assumindo a responsabilidade de algo, mas não é a ansiedade que vai parar sua vida!",
+      depressao: "É um fato que o passado ruim nos corrói emocionalmente e tira toda a animação, mas tudo tem seu tempo. RESPEITE O SEU!",
+      motivacao: "A motivação é a faísca, mas a disciplina é o fogo que mantém o motor rodando. Não espere ter vontade, faça o que precisa ser feito hoje!",
+      medo: "O medo é a barreira mais perturbadora ao seguir algo que terá um destino que vai mudar sua percepção de vida, mas se quiser crescer, vai com medo mesmo e segue a vida!"
+    };
+
+    let isAnimandoFrase = false;
+
+    function mostrarFrase(chave) {
+      if (isAnimandoFrase) return;
+
+      const balao = document.getElementById('balao-frase');
+      const texto = document.getElementById('texto-frase');
+      const novaFrase = frasesBanner[chave];
+
+      if (!balao.classList.contains('hidden')) {
+        isAnimandoFrase = true;
+        balao.classList.remove('animar-entrada');
+        balao.classList.add('animar-saida');
+
+        setTimeout(() => {
+          texto.textContent = novaFrase;
+          balao.classList.remove('animar-saida');
+          balao.classList.add('animar-entrada');
+
+          setTimeout(() => {
+            isAnimandoFrase = false;
+          }, 600);
+        }, 600);
+
+      } else {
+        isAnimandoFrase = true;
+        texto.textContent = novaFrase;
+        balao.classList.remove('hidden');
+        balao.classList.add('animar-entrada');
+
+        setTimeout(() => {
+          isAnimandoFrase = false;
+        }, 1200);
+      }
+    }
+
+    /* FUNÇÃO PARA ANIMAR OS BLOCOS NA ROLAGEM (ENTRAR E SAIR) */
+    function verificarScrollBlocos() {
+      const blockItems = document.querySelectorAll('.block-item');
+      const triggerBottom = window.innerHeight * 0.85;
+
+      blockItems.forEach(item => {
+        const itemTop = item.getBoundingClientRect().top;
+        if (itemTop < triggerBottom && itemTop > -item.offsetHeight) {
+          item.classList.add('visible');
+        } else {
+          item.classList.remove('visible');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', verificarScrollBlocos);
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+      verificarScrollBlocos();
+
+      const tema = localStorage.getItem("temaSite");
+      if (tema === "escuro") {
+        ativarModoEscuro();
+      } else {
+        ativarModoClaro();
+      }
+
+      carregarFotoPerfil();
+
+      const form = document.getElementById('newsletter-form');
+      const feedbackMsg = document.getElementById('feedback-msg');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const emailInput = document.getElementById('email').value;
+        if (emailInput) {
+          feedbackMsg.textContent = `Obrigado por se inscrever! Enviaremos as novidades para: ${emailInput}`;
+          feedbackMsg.classList.remove('hidden');
+          form.reset();
+        }
+      });
+
+      const formCadastro = document.getElementById('form-cadastro');
+      formCadastro.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const senha = document.getElementById('reg-senha').value;
+        const confirmarSenha = document.getElementById('reg-confirmar-senha').value;
+
+        if (senha !== confirmarSenha) {
+          alert('As senhas não coincidem!');
+          return;
+        }
+
+        const usuario = {
+          nome: document.getElementById('reg-nome').value + ' ' + document.getElementById('reg-sobrenome').value,
+          email: document.getElementById('reg-email').value,
+          nascimento: document.getElementById('reg-nascimento').value
+        };
+        
+        localStorage.setItem('usuarioCadastrado', JSON.stringify(usuario));
+        fecharModalCadastro();
+        atualizarEstadoUsuario();
+      });
+
+      const formLogin = document.getElementById('form-login');
+      formLogin.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const usuario = {
+          nome: email.split('@')[0],
+          email: email
+        };
+        localStorage.setItem('usuarioCadastrado', JSON.stringify(usuario));
+        fecharModalLogin();
+        atualizarEstadoUsuario();
+      });
+
+      atualizarEstadoUsuario();
+    });
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('active');
+    }
+
+    function abrirModalCadastro() {
+      document.getElementById('modal-cadastro').classList.remove('hidden');
+    }
+
+    function fecharModalCadastro() {
+      document.getElementById('modal-cadastro').classList.add('hidden');
+    }
+
+    function abrirModalLogin() {
+      document.getElementById('modal-login').classList.remove('hidden');
+    }
+
+    function fecharModalLogin() {
+      document.getElementById('modal-login').classList.add('hidden');
+    }
+
+    function atualizarEstadoUsuario() {
+      const usuarioJSON = localStorage.getItem('usuarioCadastrado');
+      const loggedOutDiv = document.getElementById('sidebar-logged-out');
+      const loggedInDiv = document.getElementById('sidebar-logged-in');
+
+      if (usuarioJSON) {
+        const usuario = JSON.parse(usuarioJSON);
+        document.getElementById('user-name-display').textContent = usuario.nome;
+        document.getElementById('user-email-display').textContent = usuario.email;
+
+        loggedOutDiv.classList.add('hidden');
+        loggedInDiv.classList.remove('hidden');
+      } else {
+        loggedOutDiv.classList.remove('hidden');
+        loggedInDiv.classList.add('hidden');
+      }
+    }
+
+    function fazerLogout() {
+      localStorage.removeItem('usuarioCadastrado');
+      atualizarEstadoUsuario();
+    }
+
+    function carregarFotoPerfil() {
+      const fotoSalva = localStorage.getItem('userFotoPerfil');
+      if (fotoSalva) {
+        document.getElementById('user-avatar').src = fotoSalva;
+      }
+    }
+
+    function solicitarNovaFoto() {
+      const urlFoto = prompt("Cole o link (URL) da imagem para a sua foto de perfil:");
+      if (urlFoto) {
+        localStorage.setItem('userFotoPerfil', urlFoto);
+        document.getElementById('user-avatar').src = urlFoto;
+      }
+    }
+
+    function atualizarBotoesTema(modo) {
+      const btnClaro = document.getElementById('btn-tema-claro');
+      const btnEscuro = document.getElementById('btn-tema-escuro');
+
+      if (modo === 'escuro') {
+        btnEscuro.classList.add('theme-active');
+        btnClaro.classList.remove('theme-active');
+      } else {
+        btnClaro.classList.add('theme-active');
+        btnEscuro.classList.remove('theme-active');
+      }
+    }
+
+    function ativarModoClaro() {
+      document.body.classList.remove("dark-mode");
+      localStorage.setItem("temaSite", "claro");
+      atualizarBotoesTema("claro");
+    }
+
+    function ativarModoEscuro() {
+      document.body.classList.add("dark-mode");
+      localStorage.setItem("temaSite", "escuro");
+      atualizarBotoesTema("escuro");
+    }
+
+    function baixarLivro(titulo, autor, preco, descricao, pdf, links = {}) {
+      const livro = { titulo, autor, preco, descricao, pdf, links };
+      localStorage.setItem("livroSelecionado", JSON.stringify(livro));
+      window.location.href = "checkout.html";
+    }
+  </script>
+</body>
+</html>

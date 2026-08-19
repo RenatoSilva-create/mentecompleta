@@ -1,0 +1,426 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Lexend", sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ==========================================
+   CORES: MODO CLARO (Padrão)
+   ========================================== */
+body {
+  background-color: #e5e5e3;
+  color: #111;
+  line-height: 1.6;
+}
+
+.book-card {
+  background-color: #5ff96c;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s;
+}
+
+.author, .description {
+  font-size: 0.9rem;
+  color: #111;
+  margin-bottom: 0.5rem;
+}
+
+/* ==========================================
+   CORES: MODO ESCURO
+   ========================================== */
+body.dark-mode {
+  background-color: #2b2b2b;
+  color: #fff;
+}
+
+body.dark-mode .book-card {
+  background-color: #bb4ffe;
+}
+
+body.dark-mode .author, 
+body.dark-mode .description {
+  color: #ffffff;
+}
+
+/* ==========================================
+   HEADER (CABEÇALHO)
+   ========================================== */
+header {
+  background-color: #bb4ffe;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.open-sidebar-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+}
+
+.logo a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.logo h1 {
+  font-size: 1.5rem;
+}
+
+.logo span {
+  color: #5bff95;
+}
+
+/* ==========================================
+   CATÁLOGO & CARDS DE LIVROS
+   ========================================== */
+.catalog {
+  padding: 3rem 5%;
+  text-align: center;
+}
+
+.catalog h2 {
+  margin-bottom: 0.5rem;
+  font-size: 2.2rem;
+  color: #bb4ffe;
+}
+
+body.dark-mode .catalog h2 {
+  color: #5bff95;
+}
+
+.catalog-subtitle {
+  margin-bottom: 2.5rem;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+}
+
+.book-cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1.2rem;
+}
+
+.book-cover img {
+  width: 60%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.book-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  text-align: left;
+}
+
+.book-info h3 {
+  font-size: 1.2rem;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.price {
+  font-weight: bold;
+  color: #111;
+  font-size: 1.1rem;
+}
+
+body.dark-mode .price {
+  color: #fff;
+}
+
+.btn-buy {
+  background-color: #9557ff;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-buy:hover {
+  background-color: #d8ff8b;
+  color: #000000;
+}
+
+/* ==========================================
+   BOTÕES GERAIS
+   ========================================== */
+.btn {
+  display: inline-block;
+  background-color: #8fff45;
+  color: #ffffff;
+  padding: 0.7rem 1.5rem;
+  border-radius: 5px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, border 0.3s;
+  text-align: center;
+  font-weight: 600;
+}
+
+.btn:hover {
+  background-color: #c1ff84;
+  color: #000000;
+}
+
+.btn-secondary {
+  background-color: #20f4ff;
+  color: #ffffff;
+}
+
+.btn-secondary:hover {
+  background-color: #f9ffa5;
+  color: #000000;
+}
+
+.btn.theme-active {
+  outline: 3px solid #bb4ffe;
+  box-shadow: 0 0 10px rgba(187, 79, 254, 0.5);
+}
+
+/* ==========================================
+   SIDEBAR
+   ========================================== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 300px;
+  height: 100%;
+  background-color: #ffffff;
+  color: #333;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+  transition: left 0.3s ease;
+  z-index: 1001;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+body.dark-mode .sidebar {
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-close {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+
+.profile-pic {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #bb4ffe;
+  margin-bottom: 0.5rem;
+}
+
+.change-photo-btn {
+  font-size: 0.75rem;
+  background: transparent;
+  border: none;
+  color: #bb4ffe;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.sidebar-nav {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.sidebar-nav a {
+  color: inherit;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: block;
+  padding: 0.5rem;
+  border-radius: 5px;
+  transition: background 0.2s;
+}
+
+.sidebar-nav a:hover {
+  background-color: rgba(0,0,0,0.08);
+}
+
+body.dark-mode .sidebar-nav a:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+.sidebar-auth-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: none;
+}
+
+.overlay.active {
+  display: block;
+}
+
+/* ==========================================
+   FOOTER
+   ========================================== */
+footer {
+  background-color: #4ffe5e;
+  color: #111;
+  padding: 2rem 5% 1rem;
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.copyright {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================
+   MODAIS
+   ========================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-card {
+  background: #2b2b2b;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  color: #fff;
+  position: relative;
+}
+
+.modal-card h2 {
+  margin-bottom: 1rem;
+  color: #11ced7;
+}
+
+.modal-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-card input {
+  padding: 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 600px) {
+  .logo h1 { font-size: 1.2rem; }
+  .sidebar { width: 260px; }
+  .book-cover img { width: 75%; }
+}
