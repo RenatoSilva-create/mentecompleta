@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo</title>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- CSS Externo -->
+  <link rel="stylesheet" href="C:Users/renat/Videos/development/src/style.css">
+
+  <style src="C:Users/renat/Videos/development/src/style.css"></style>
+</head>
+
+<body>
+
+  <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+  <header>
+    <div class="header-left">
+      <button class="open-sidebar-btn" onclick="toggleSidebar()" aria-label="Abrir Menu">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+      </button>
+      <div class="logo">
+        <a href="index.html"><h1>Mente<span>Completa</span></h1></a>
+      </div>
+    </div>
+  </header>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h3>Menu & Perfil</h3>
+      <button class="sidebar-close" onclick="toggleSidebar()">&times;</button>
+    </div>
+
+    <div class="profile-container">
+      <img id="user-avatar" src="https://via.placeholder.com/150" alt="Foto de Perfil" class="profile-pic">
+      <button class="change-photo-btn" onclick="solicitarNovaFoto()">Alterar Foto</button>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="index.html#sobre">Sobre</a></li>
+        <li><a href="livros.html">Livros</a></li>
+        <li><a href="index.html#depoimentos">Depoimentos</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+
+    <hr style="margin: 10px 0; border: 0; border-top: 1px solid #ccc;">
+
+    <div class="sidebar-content">
+      <div id="sidebar-logged-out">
+        <p style="margin-bottom: 10px; font-size: 0.9rem;">Acesse sua conta ou cadastre-se:</p>
+        <div class="sidebar-auth-btns">
+          <button class="btn" onclick="toggleSidebar(); abrirModalCadastro();">Criar Conta</button>
+          <button class="btn btn-secondary" onclick="toggleSidebar(); abrirModalLogin();">Entrar</button>
+        </div>
+      </div>
+
+      <div id="sidebar-logged-in" class="hidden">
+        <p><strong>Nome:</strong> <span id="user-name-display"></span></p>
+        <p><strong>E-mail:</strong> <span id="user-email-display"></span></p>
+        <button class="btn" style="background-color: #505050; color: #ffffff; margin-top: 10px; width: 100%;" onclick="fazerLogout()">Sair</button>
+      </div>
+    </div>
+
+    <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ccc;">
+
+    <h4>Tema do Site</h4>
+    <div style="display:flex; gap:10px; margin-top:10px;">
+      <button id="btn-tema-claro" class="btn" style="flex: 1;" onclick="ativarModoClaro()">
+        <i class="fa-solid fa-sun"></i> Claro
+      </button>
+      <button id="btn-tema-escuro" class="btn" style="flex: 1;" onclick="ativarModoEscuro()">
+        <i class="fa-solid fa-moon"></i> Escuro
+      </button>
+    </div>
+  </aside>
+
+  <section class="catalog">
+    <h2>Catálogo Completo de Livros e E-books</h2>
+    <p class="catalog-subtitle">Adquira sua leitura diretamente na Kiwify.</p>
+
+    <div class="book-grid">
+      
+      <article class="book-card">
+        <div class="book-cover">
+          <img src="C:/Users/renat/Videos/development/src/vozes que curam.png" alt="Capa do Livro Vozes que Curam">
+        </div>
+        <div class="book-info">
+          <h3>Vozes que Curam</h3>
+          <p class="author">Por Renato Silva</p>
+          <p class="description">Entenda como a música afeta diretamente a saúde mental e traz equilíbrio diário.</p>
+          <div class="card-footer">
+            <span class="price">R$ 40,22</span>
+            <button class="btn-buy" 
+                    data-kiwify-url="https://pay.kiwify.com.br/3q6gKg3"
+                    onclick="redirecionarKiwify(this)">
+              <i class="fa-solid fa-cart-shopping"></i> Comprar
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="book-card">
+        <div class="book-cover">
+          <img src="C:/Users/renat/Videos/development/src/história de jesus cristo.png" alt="Capa do E-book História de Jesus Cristo">
+        </div>
+        <div class="book-info">
+          <h3>História de Jesus Cristo</h3>
+          <p class="author">Por Renato Silva</p>
+          <p class="description">Uma narrativa visual ilustrada sobre a vida e os ensinamentos de Jesus.</p>
+          <div class="card-footer">
+            <span class="price">R$ 61,14</span>
+            <button class="btn-buy" 
+                    data-kiwify-url="https://pay.kiwify.com.br/L43mZj5"
+                    onclick="redirecionarKiwify(this)">
+              <i class="fa-solid fa-cart-shopping"></i> Comprar
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="book-card">
+        <div class="book-cover">
+          <img src="livro de pintar.jpg" alt="Capa Caderno de Pinturas">
+        </div>
+        <div class="book-info">
+          <h3>Caderno de Pinturas</h3>
+          <p class="author">Por Renato Silva</p>
+          <p class="description">Divirta-se pintando desenhos!</p>
+          <div class="card-footer">
+            <span class="price">R$ 115,24</span>
+            <button class="btn-buy" 
+                    data-kiwify-url=""
+                    onclick="redirecionarKiwify(this)">
+              <i class="fa-solid fa-cart-shopping"></i> Comprar
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="book-card">
+        <div class="book-cover">
+          <img src="https://via.placeholder.com/300x400/5ff96c/111111?text=Habitos+de+Aco" alt="Capa Hábitos de Aço">
+        </div>
+        <div class="book-info">
+          <h3>Hábitos de Aço</h3>
+          <p class="author">Por Renato Silva</p>
+          <p class="description">Métodos práticos para construir uma rotina produtiva e inquebrável.</p>
+          <div class="card-footer">
+            <span class="price">R$ 29,90</span>
+            <button class="btn-buy" 
+                    data-kiwify-url=""
+                    onclick="redirecionarKiwify(this)">
+              <i class="fa-solid fa-cart-shopping"></i> Comprar
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="book-card">
+        <div class="book-cover">
+          <img src="https://via.placeholder.com/300x400/20f4ff/111111?text=Foco+Absoluto" alt="Capa Foco Absoluto">
+        </div>
+        <div class="book-info">
+          <h3>Foco Absoluto</h3>
+          <p class="author">Por Renato Silva</p>
+          <p class="description">Elimine as distrações modernas e dobre sua capacidade de concentração.</p>
+          <div class="card-footer">
+            <span class="price">R$ 45,00</span>
+            <button class="btn-buy" 
+                    data-kiwify-url=""
+                    onclick="redirecionarKiwify(this)">
+              <i class="fa-solid fa-cart-shopping"></i> Comprar
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="book-card">
+        <div class="book-cover">
+          <img src="https://via.placeholder.com/300x400/ffffcc/111111?text=Lapadas+da+Vida" alt="Capa Lapadas da Vida">
+        </div>
+        <div class="book-info">
+          <h3>Lapadas da Vida</h3>
+          <p class="author">Por Renato Silva</p>
+          <p class="description">Frases diretas e sem filtro para te tirar da zona de conforto imediatamente.</p>
+          <div class="card-footer">
+            <span class="price">R$ 25,00</span>
+            <button class="btn-buy" 
+                    data-kiwify-url=""
+                    onclick="redirecionarKiwify(this)">
+              <i class="fa-solid fa-cart-shopping"></i> Comprar
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="book-card">
+        <div class="book-cover">
+          <img src="https://via.placeholder.com/300x400/bb4ffe/ffffff?text=A+Arte+da+Resiliencia" alt="Capa A Arte da Resiliência">
+        </div>
+        <div class="book-info">
+          <h3>A Arte da Resiliência</h3>
+          <p class="author">Por Renato Silva</p>
+          <p class="description">Como usar os momentos difíceis como combustível para o seu crescimento.</p>
+          <div class="card-footer">
+            <span class="price">R$ 39,90</span>
+            <button class="btn-buy" 
+                    data-kiwify-url=""
+                    onclick="redirecionarKiwify(this)">
+              <i class="fa-solid fa-cart-shopping"></i> Comprar
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="book-card">
+        <div class="book-cover">
+          <img src="https://via.placeholder.com/300x400/5ff96c/111111?text=Desperte+seu+Potencial" alt="Capa Desperte Seu Potencial">
+        </div>
+        <div class="book-info">
+          <h3>Desperte Seu Potencial</h3>
+          <p class="author">Por Renato Silva</p>
+          <p class="description">Descubra suas verdadeiras habilidades e alcance suas metas pessoais.</p>
+          <div class="card-footer">
+            <span class="price">R$ 49,90</span>
+            <button class="btn-buy" 
+                    data-kiwify-url=""
+                    onclick="redirecionarKiwify(this)">
+              <i class="fa-solid fa-cart-shopping"></i> Comprar
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="book-card">
+        <div class="book-cover">
+          <img src="https://via.placeholder.com/300x400/20f4ff/111111?text=Silenciando+o+Ruido" alt="Capa Silenciando o Ruído Interior">
+        </div>
+        <div class="book-info">
+          <h3>Silenciando o Ruído Interior</h3>
+          <p class="author">Por Renato Silva</p>
+          <p class="description">Técnicas de quietude e paz interior para manter a clareza mental.</p>
+          <div class="card-footer">
+            <span class="price">R$ 32,50</span>
+            <button class="btn-buy" 
+                    data-kiwify-url=""
+                    onclick="redirecionarKiwify(this)">
+              <i class="fa-solid fa-cart-shopping"></i> Comprar
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="book-card">
+        <div class="book-cover">
+          <img src="https://via.placeholder.com/300x400/ffffcc/111111?text=Sabedoria+Diaria" alt="Capa Sabedoria Diária">
+        </div>
+        <div class="book-info">
+          <h3>Sabedoria Diária</h3>
+          <p class="author">Por Renato Silva</p>
+          <p class="description">365 pílulas diárias de conhecimento para transformar seus dias.</p>
+          <div class="card-footer">
+            <span class="price">R$ 55,00</span>
+            <button class="btn-buy" 
+                    data-kiwify-url=""
+                    onclick="redirecionarKiwify(this)">
+              <i class="fa-solid fa-cart-shopping"></i> Comprar
+            </button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <footer id="contato">
+    <div class="copyright">
+      <p>&copy; 2026 Mente Completa. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <div id="modal-cadastro" class="modal-overlay hidden">
+    <div class="modal-card">
+      <button class="modal-close" onclick="fecharModalCadastro()">&times;</button>
+      <h2>Criar Conta</h2>
+      <form id="form-cadastro">
+        <label for="reg-nome">Nome Completo:</label>
+        <input type="text" id="reg-nome" required placeholder="Seu nome">
+
+        <label for="reg-email">E-mail:</label>
+        <input type="email" id="reg-email" required placeholder="seu@email.com">
+
+        <label for="reg-nascimento">Data de Nascimento:</label>
+        <input type="date" id="reg-nascimento" required>
+
+        <button type="submit" class="btn">Cadastrar</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-login" class="modal-overlay hidden">
+    <div class="modal-card">
+      <button class="modal-close" onclick="fecharModalLogin()">&times;</button>
+      <h2>Entrar na Conta</h2>
+      <form id="form-login">
+        <label for="login-email">E-mail:</label>
+        <input type="email" id="login-email" required placeholder="seu@email.com">
+
+        <label for="login-senha">Senha:</label>
+        <input type="password" id="login-senha" required placeholder="******">
+
+        <button type="submit" class="btn btn-secondary">Entrar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript Externo -->
+  <script src="script.js"></script>
+</body>
+</html>
